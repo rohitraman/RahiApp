@@ -25,16 +25,13 @@ class RailIN:
         cap = CaptchaBreak.Captcha()
         if (len(str(PNR))<10) or (len(str(PNR))>10):
             return dumps({'error':'PNR must be 10 digit.'})
-        URL_captcha = 'http://www.indianrail.gov.in/enquiry/captchaDraw.png'
         # create a Session
-        s = Session()
-        s.headers['User-Agent'] = gua()
-        probable_captcha = cap.decode(s.get(URL_captcha).content)
-        try:
-            URL = 'http://www.indianrail.gov.in/enquiry/CommonCaptcha?inputCaptcha='+probable_captcha+'&inputPnrNo='+PNR+'&inputPage=PNR'
-            return loads(s.get(URL).text)
-        except:
-            return dumps({'error':'some captcha error occured'})
+        
+        URL = 'https://api.railwayapi.com/v2/pnr-status/pnr/'+str(PNR)+'/apikey/qaeoym36ek/'
+        fh = urllib.request.urlopen(URL)
+        data = fh.read()
+        return data.decode("utf-8")
+    
 
     def getRoute(self,TN):
         ID = self.getTrain(TN)

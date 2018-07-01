@@ -95,6 +95,8 @@ public class GetAvailabilityActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 JSONArray array = response.getJSONArray("availability");
+                                JSONObject journey_class = response.getJSONObject("journey_class");
+                                String name = journey_class.getString("name");
                                 for (int i =0;i<array.length();i++ )
                                 {
                                     JSONObject object1 = array.getJSONObject(i);
