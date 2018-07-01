@@ -51,7 +51,16 @@ public class GetFareActivity extends AppCompatActivity {
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getFare", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Log.i("Response",response.toString());
+                            try {
+                                JSONObject adult = response.getJSONObject("Adult");
+                                JSONObject adultTatkal = response.getJSONObject("Adult Tatkal");
+                                JSONObject child = response.getJSONObject("Child");
+                                JSONObject childTatkal = response.getJSONObject("Child Tatkal");
+                                JSONObject senFemale = response.getJSONObject("Sen. Female");
+                                JSONObject senMale = response.getJSONObject("Sen. Male");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override

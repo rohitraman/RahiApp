@@ -1,7 +1,7 @@
 package com.example.roshan.rahiapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +43,7 @@ public class GetTrainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 JSONObject object = new JSONObject();
                 try {
-                    object.put("train_no",etTrain.getText().toString());
+                    object.put("train_no", etTrain.getText().toString());
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getTrain", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -53,10 +53,9 @@ public class GetTrainActivity extends AppCompatActivity {
                                 String type = object1.getString("train_type");
                                 JSONObject trainBase = object1.getJSONObject("train_base");
 
-                                for (int i=0;i<array.length();i++)
-                                {
+                                for (int i = 0; i < array.length(); i++) {
                                     JSONObject object2 = array.getJSONObject(i);
-                                    JSONObject coachNo = object2.getJSONObject(String.valueOf(i+1));
+                                    JSONObject coachNo = object2.getJSONObject(String.valueOf(i + 1));
                                     String coach_id = coachNo.getString("coach_id");
                                     String coach_type = coachNo.getString("type");
 
@@ -68,13 +67,12 @@ public class GetTrainActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.i("Errrrooorrr",error.getMessage());
+                            Log.i("Errrrooorrr", error.getMessage());
                             NetworkResponse response = error.networkResponse;
-                            if (error instanceof ServerError && response!=null)
-                            {
+                            if (error instanceof ServerError && response != null) {
                                 try {
-                                    String string = new String(response.data, HttpHeaderParser.parseCharset(response.headers,"utf-8"));
-                                    Log.i("Yaay",string);
+                                    String string = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                    Log.i("Yaay", string);
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
