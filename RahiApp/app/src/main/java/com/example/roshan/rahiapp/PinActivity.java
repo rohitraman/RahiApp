@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+//Format of response
+// {"boardingPoint":"CLT","bookingDate":"Jul 1, 2018 12:00:00 AM","bookingFare":540,"chartStatus":"Chart Not Prepared","dateOfJourney":"Jul 22, 2018 12:00:00 AM","destinationStation":"MAQ","generatedTimeStamp":{"day":2,"hour":14,"minute":5,"month":7,"second":4,"year":2018},"informationMessage":["",""],"isWL":"N","journeyClass":"3A","numberOfpassenger":1,"passengerList":[{"bookingBerthCode":"LB","bookingBerthNo":57,"bookingCoachId":"B1","bookingStatus":"CNF","bookingStatusDetails":"CNF\/B1\/57\/LB","bookingStatusIndex":0,"childBerthFlag":false,"concessionOpted":false,"currentBerthNo":0,"currentCoachId":"","currentStatus":"CNF","currentStatusDetails":"CNF","currentStatusIndex":0,"forGoConcessionOpted":false,"passengerCoachPosition":0,"passengerIcardFlag":false,"passengerNationality":"IN","passengerQuota":"PQ","passengerSerialNumber":1,"waitListType":0}],"pnrNumber":"4246494122","quota":"PQ","reasonType":"S","reservationUpto":"MAQ","serverId":"aposnd02:instance3","sourceStation":"CLT","ticketFare":540,"ticketTypeInPrs":"E","timeStamp":"Jul 2, 2018 2:05:04 PM","trainName":"MANGALORE MAIL","trainNumber":"12601","waitListType":0}
 
 public class PinActivity extends AppCompatActivity {
     PinLockView lockView;
@@ -40,7 +42,7 @@ public class PinActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 User user = snapshot.getValue(User.class);
                                 if (user != null) {
-                                    if (user.getEmail().equals(DBUser.user.getEmail())) {
+                                    if (user.getEmail().split("@")[0].equals(DBUser.user.getEmail().split("@")[0])) {
                                         if (user.getPin().equals(encryptedValue)) {
                                             startActivity(new Intent(PinActivity.this, MainActivity.class));
                                             finish();

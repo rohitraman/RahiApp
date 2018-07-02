@@ -38,7 +38,7 @@ public class GetPNRActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject();
                 try {
                     object.put("pnr",pnr);
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105/getPNR", object, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getPNR", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.i("Response",response.toString());
