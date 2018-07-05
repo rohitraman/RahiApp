@@ -7,10 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     private DatabaseReference reference;
     private User user;
+    Session session;
 
     private FirebaseAuth mAuth;
 
@@ -46,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         regPin = (EditText) findViewById(R.id.register_pin);
         createAccount = (Button) findViewById(R.id.register_button);
         backToLoginBtn = (Button) findViewById(R.id.register_to_login_btn);
-
+        session = new Session(this);
         mAuth = FirebaseAuth.getInstance();
 
         backToLoginBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mProgress.setCanceledOnTouchOutside(false);
                     mProgress.show();
                     try {
-                        user = new User(regEmail.getText().toString(),AESEncrypt.encrypt(regPin.getText().toString()));
+                        user = new User(regEmail.getText().toString(), AESEncrypt.encrypt(regPin.getText().toString()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -85,18 +86,24 @@ public class RegisterActivity extends AppCompatActivity {
                                         reference.child(regEmail.getText().toString().split("@")[0]).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful())
-                                                {
-                                                    Snackbar.make(view,"Account Created",Snackbar.LENGTH_SHORT).show();
-                                                    DBUser.user = mAuth.getCurrentUser();
-                                                    Intent intent = new Intent(RegisterActivity.this,PinActivity.class);
-                                                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                                    finish();
-                                                }
+                                                if (task.isSuccessful()) {
+                                                    Snackbar.make(view, "Account Created", Snackbar.LENGTH_SHORT).show();
+                                                    mAuth.signInWithEmailAndPassword(regEmail.getText().toString(), regPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                                            if (task.isSuccessful()) {
+                                                                session.setLoggedIn(true);
+                                                                DBUser.user = mAuth.getCurrentUser();
+                                                                Log.i("User",DBUser.user.getEmail());
+                                                                Intent intent = new Intent(RegisterActivity.this, PinActivity.class);
+                                                                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                                finish();
+                                                            }
+                                                        }
+                                                    });
 
-                                                else
-                                                {
-                                                    Snackbar.make(view,"Account not created",Snackbar.LENGTH_SHORT).show();
+                                                } else {
+                                                    Snackbar.make(view, "Account not created", Snackbar.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });

@@ -40,7 +40,7 @@ public class PinActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 User user = snapshot.getValue(User.class);
                                 if (user != null) {
-                                    if (user.getEmail().equals(DBUser.user.getEmail())) {
+                                    if (user.getEmail().split("@")[0].equals(DBUser.user.getEmail().split("@")[0])) {
                                         if (user.getPin().equals(encryptedValue)) {
                                             startActivity(new Intent(PinActivity.this, MainActivity.class));
                                             finish();

@@ -1,4 +1,5 @@
 from flask import Flask, current_app, request, jsonify
+from pyinrail import pyinrail
 import sys
 from RailIN import RailIN
 import json
@@ -30,11 +31,10 @@ def getPNR():
     try:
         req_data = request.get_json()
         pnr = req_data['pnr']
-        ri = RailIN()
-        data = ri.getPNR(pnr)
+        enq = pyinrail.RailwayEnquiry()
+        data = enq.get_pnr_status(pnr)
         print(data,file = sys.stderr)
-        data = jsonify(json.loads(data))
-        return data
+        return jsonify(json.loads(json.dumps(data)))
     except Exception:
         return jsonify(status_code = 400, msg = 'Bad Request'),400  
 
