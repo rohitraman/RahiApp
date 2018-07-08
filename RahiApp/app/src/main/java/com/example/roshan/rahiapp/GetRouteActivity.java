@@ -44,9 +44,9 @@ public class GetRouteActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject();
                 try {
                     Log.i("Blll","Bliiii");
-                    object.put("train_no",etTrainNo.getText().toString());
+                    object.put("train_no",Integer.parseInt(etTrainNo.getText().toString()));
                     Log.i("Yaay",object.toString());
-                    final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getRoute", object, new Response.Listener<JSONObject>() {
+                    final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getRoute", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
@@ -64,7 +64,8 @@ public class GetRouteActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.i("jaaaa",error.getLocalizedMessage());
+
+                            Log.i("jaaaa",error.toString());
                             NetworkResponse response = error.networkResponse;
                             if(error instanceof ServerError && response!=null)
                             {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,10 +49,11 @@ public class GetFareActivity extends AppCompatActivity {
                     object.put("from", etGetFrom.getText().toString().toUpperCase());
                     object.put("to",etGetTo.getText().toString().toUpperCase());
                     object.put("train_no",Integer.parseInt(etGetTrainNo.getText().toString()));
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getFare", object, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getFare", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                Log.i("Response",response.toString());
                                 JSONObject adult = response.getJSONObject("Adult");
                                 JSONObject adultTatkal = response.getJSONObject("Adult Tatkal");
                                 JSONObject child = response.getJSONObject("Child");
@@ -65,7 +67,7 @@ public class GetFareActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-//                            Log.i("Error",error.getMessage());
+                            Log.i("Error",error.toString());
                             NetworkResponse response = error.networkResponse;
                             if (error instanceof ServerError && response!=null)
                             {
@@ -79,6 +81,7 @@ public class GetFareActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES*2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     RequestQueue queue = Volley.newRequestQueue(GetFareActivity.this);
                     queue.add(request);
                 } catch (JSONException e) {

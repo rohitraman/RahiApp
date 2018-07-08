@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +38,7 @@ public class GetAvailabilityActivity extends AppCompatActivity {
     String day;
     String month;
     String year;
-    String date;
+    String date,date3;
     DatePickerDialog dialog;
 
     @Override
@@ -65,6 +66,7 @@ public class GetAvailabilityActivity extends AppCompatActivity {
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                             date = String.valueOf(i2) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i);
+                            date3 = date;
                             date1.setText(date);
                         }
                     }, yy, mm, dd);
@@ -88,9 +90,10 @@ public class GetAvailabilityActivity extends AppCompatActivity {
                     object.put("dd", Integer.parseInt(day));
                     object.put("mm", Integer.parseInt(month));
                     object.put("yyyy", Integer.parseInt(year));
+                    object.put("date",date3);
                     object.put("train_no", train_no.getText().toString());
                     Log.i("Hellooo", object.toString());
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getAvailability", object, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getAvailability", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
@@ -121,6 +124,7 @@ public class GetAvailabilityActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES*2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     RequestQueue requestQueue = Volley.newRequestQueue(GetAvailabilityActivity.this);
                     requestQueue.add(request);
 

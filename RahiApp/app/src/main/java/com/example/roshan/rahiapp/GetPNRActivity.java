@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -42,37 +44,47 @@ public class GetPNRActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject();
                 try {
                     object.put("pnr",pnr);
-                    final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getPNR", object, new Response.Listener<JSONObject>() {
+                    final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getPNR", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            try {
-                                String boardingPoint = response.getString("boardingPoint");
-                                int bookingFare = response.getInt("bookingFare");
-                                String destinationStation = response.getString("destinationStation");
-                                String journeyClass = response.getString("journeyClass");
-                                String isWL = response.getString("isWL");
-                                String pnrNumber = response.getString("pnrNumber");
-                                int numberOfpassenger = response.getInt("numberOfpassenger");
-                                String quota = response.getString("quota");
-                                String trainName = response.getString("trainName");
-                                String trainNumber = response.getString("trainNumber");
-                                JSONArray array = response.getJSONArray("passengerList");
-                                for (int i =0; i<array.length();i++)
-                                {
-                                    JSONObject object1 =array.getJSONObject(i);
-                                    String bookingBerthCode = object1.getString("bookingBerthCode");
-                                    int bookingBerthNo = object1.getInt("bookingBerthNo");
-                                    String bookingCoachId = object1.getString("bookingCoachId");
-                                    String bookingStatus = object1.getString("bookingStatus");
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                Log.i("Rsponse",response.toString());
+//                            try {
+//                                String boardingPoint = response.getString("boardingPoint");
+//                                int bookingFare = response.getInt("bookingFare");
+//                                String destinationStation = response.getString("destinationStation");
+//                                String journeyClass = response.getString("journeyClass");
+//                                String isWL = response.getString("isWL");
+//                                String pnrNumber = response.getString("pnrNumber");
+//                                int numberOfpassenger = response.getInt("numberOfpassenger");
+//                                String quota = response.getString("quota");
+//                                String trainName = response.getString("trainName");
+//                                String trainNumber = response.getString("trainNumber");
+//                                JSONArray array = response.getJSONArray("passengerList");
+//                                for (int i =0; i<array.length();i++)
+//                                {
+//                                    JSONObject object1 =array.getJSONObject(i);
+//                                    String bookingBerthCode = object1.getString("bookingBerthCode");
+//                                    int bookingBerthNo = object1.getInt("bookingBerthNo");
+//                                    String bookingCoachId = object1.getString("bookingCoachId");
+//                                    String bookingStatus = object1.getString("bookingStatus");
+//                                }
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            if (error!=null) {
+                              try
+                              {
+                                Log.i("Erroe", error.toString());
+                            }catch (Exception e)
+                              {
+                                  Log.i("Ball",e.getMessage());
+                              }
+                            }
                             NetworkResponse response = error.networkResponse;
                             if(error instanceof ServerError && response!=null)
                             {
@@ -86,6 +98,8 @@ public class GetPNRActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES*2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     RequestQueue queue = Volley.newRequestQueue(GetPNRActivity.this);
                     queue.add(request);
 

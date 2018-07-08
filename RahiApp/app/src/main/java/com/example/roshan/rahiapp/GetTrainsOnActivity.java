@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -74,11 +75,12 @@ public class GetTrainsOnActivity extends AppCompatActivity {
                     object.put("dd", Integer.parseInt(dd));
                     object.put("mm", Integer.parseInt(mm));
                     object.put("yyyy", Integer.parseInt(yy));
-                    final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getTrainsOn", object, new Response.Listener<JSONObject>() {
+                    final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getTrainsOn", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                JSONObject train_base = response.getJSONObject("train_base");
+                                Log.i("Last one",response.toString());
+                                JSONObject train_base = response.getJSONObject("trains");
                                 String source_stn_name = train_base.getString("source_stn_name");
                                 String source_depart = train_base.getString("source_depart");
                                 String from_stn_name = train_base.getString("from_stn_name");
@@ -91,7 +93,7 @@ public class GetTrainsOnActivity extends AppCompatActivity {
                                 String to_stn_name = train_base.getString("to_stn_name");
                                 String to_time = train_base.getString("to_time");
                                 String from_time = train_base.getString("from_time");
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -111,7 +113,7 @@ public class GetTrainsOnActivity extends AppCompatActivity {
                             ;
                         }
                     });
-
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     RequestQueue queue = Volley.newRequestQueue(GetTrainsOnActivity.this);
                     queue.add(request);
                 } catch (JSONException e) {
