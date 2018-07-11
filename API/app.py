@@ -1,8 +1,9 @@
-from flask import Flask, current_app, request, jsonify
-from pyinrail import pyinrail
+from flask import Flask, request, jsonify
+import pyinrail
 import sys
-from RailIN import RailIN
+import RailIN
 import json
+import os
 
 app = Flask(__name__)
 
@@ -19,36 +20,37 @@ def getAvailability():
         day = req_data['dd']
         month = req_data['mm']
         year = req_data['yyyy']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getAvailability(trainNo,fromData,toData,clss,quota,day,month,year)
         data = jsonify(json.loads(data))
         return data
     except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400  
+        return jsonify(status_code = 400, msg = 'Bad Request'),400
 
 @app.route('/getPNR',methods = ['POST'])
 def getPNR():
     try:
         req_data = request.get_json()
         pnr = req_data['pnr']
-        enq = pyinrail.RailwayEnquiry()
-        data = enq.get_pnr_status(pnr)
-        print(data,file = sys.stderr)
-        return jsonify(json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400  
+        enq = RailIN.RailIN()
+        # print('hello',file = sys.stderr)
+        data = enq.getPNR(pnr)
+        # print('hello',file = sys.stderr)
+        return jsonify(json.loads(data))
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 @app.route('/getRoute',methods = ['POST'])
 def getRoute():
     try:
         req_data = request.get_json()
         trainNo = req_data['train_no']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getRoute(trainNo)
-        print(data,file = sys.stderr)
+        # print(data,file = sys.stderr)
         return jsonify(route = json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400          
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 @app.route('/getAllTrains',methods = ['POST'])
 def getAllTrains():
@@ -56,12 +58,12 @@ def getAllTrains():
         req_data = request.get_json()
         fromData = req_data['from']
         toData = req_data['to']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getAllTrains(fromData,toData)
         print(data,file = sys.stderr)
         return jsonify(trains = json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400          
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 @app.route('/getTrainsOn',methods = ['POST'])
 def getTrainsOn():
@@ -72,24 +74,24 @@ def getTrainsOn():
         day = req_data['dd']
         month = req_data['mm']
         year = req_data['yyyy']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getTrainsOn(fromData,toData,day,month,year)
-        print(data,file = sys.stderr)
+        # print(data,file = sys.stderr)
         return jsonify(trains = json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400 
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 @app.route('/getTrain',methods = ['POST'])
 def getTrain():
     try:
         req_data = request.get_json()
         trainNo = req_data['train_no']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getTrain(trainNo)
-        print(data,file = sys.stderr)
+        # print(data,file = sys.stderr)
         return jsonify(train = json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400  
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 @app.route('/getFare',methods = ['POST'])
 def getFare():
@@ -98,11 +100,11 @@ def getFare():
         fromData = req_data['from']
         toData = req_data['to']
         trainNo = req_data['train_no']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getFare(trainNo,fromData,toData)
         return jsonify(json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400 
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 @app.route('/getStatus',methods = ['POST'])
 def getStatus():
@@ -110,11 +112,12 @@ def getStatus():
         req_data = request.get_json()
         trainNo = req_data['train_no']
         station = req_data['station']
-        ri = RailIN()
+        ri = RailIN.RailIN()
         data = ri.getStatus(trainNo,station)
         return jsonify(status = json.loads(json.dumps(data)))
-    except Exception:
-        return jsonify(status_code = 400, msg = 'Bad Request'),400
+    except Exception as e:
+        return jsonify(status_code = 400, msg = str(e)),400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    port = int(os.environ.get('PORT',5000))
+    app.run(host= '0.0.0.0',port=port,debug=True)

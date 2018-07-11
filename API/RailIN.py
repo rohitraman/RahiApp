@@ -1,6 +1,4 @@
-from requests import get,post,Session
-import CaptchaBreak
-from user_agent import generate_user_agent as gua
+from requests import get
 from json import dumps,loads
 from prettify import Prettify
 from datetime import date
@@ -22,23 +20,24 @@ Not intended for commercial use.
 class RailIN:
     # Website asks for captcha which can be pre-generated due to the flaw
     def getPNR(self,PNR):
-        cap = CaptchaBreak.Captcha()
         if (len(str(PNR))<10) or (len(str(PNR))>10):
             return dumps({'error':'PNR must be 10 digit.'})
         # create a Session
-        
+
         URL = 'https://api.railwayapi.com/v2/pnr-status/pnr/'+str(PNR)+'/apikey/qaeoym36ek/'
         fh = urllib.request.urlopen(URL)
         data = fh.read()
         return data.decode("utf-8")
-    
+
 
     def getRoute(self,TN):
         ID = self.getTrain(TN)
+        print(ID,file = sys.stderr)
         try:
-            ID['error']
+            ID = ID[0]['train_base']['train_id']
+            print(ID,file = sys.stderr)
         except KeyError:
-            ID = ID['train_base']['train_id']
+            ID['error']
         URL_Route = "https://erail.in/data.aspx?Action=TRAINROUTE&Password=2012&Data1="+ID+"&Data2=0&Cache=true"
         fh = urllib.request.urlopen(URL_Route)
         data = fh.read()
@@ -46,7 +45,9 @@ class RailIN:
 
     def getAllTrains(self,F,T):
         URL_Trains = "https://erail.in/rail/getTrains.aspx?Station_From="+F+"&Station_To="+T+"&DataSource=0&Language=0&Cache=true"
-        return Prettify().TrainsToJson(get(URL_Trains,headers = {'User-Agent':gua()}).text)
+        fh = urllib.request.urlopen(URL_Trains)
+        data = fh.read()
+        return Prettify().TrainsToJson(data.decode("utf-8"))
 
     # Pass in date month and year
     def getTrainsOn(self,F,T,DD,MM,YYYY):
@@ -59,9 +60,11 @@ class RailIN:
         return retval
 
     def getTrain(self,TN):
-        URL_Train = "https://erail.in/rail/getTrains.aspx?TrainNo="+str(TN)+"&DataSource=0&Language=0&Cache=true"
+        URL_Train = "http://erail.in/rail/getTrains.aspx?TrainNo="+str(TN)+"&DataSource=0&Language=0&Cache=true"
+        fh = urllib.request.urlopen(URL_Train)
+        data = fh.read()
         try:
-            return Prettify().TrainsToJson(get(URL_Train).text)[0]
+            return Prettify().TrainsToJson(data.decode("utf-8"))
         except:
             return {'error':'Unexpected Server Response'}
 

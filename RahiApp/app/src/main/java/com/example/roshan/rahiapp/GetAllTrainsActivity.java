@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,10 +47,11 @@ public class GetAllTrainsActivity extends AppCompatActivity {
                 try {
                     object.put("from", etFrom.getText().toString().toUpperCase());
                     object.put("to", etTo.getText().toString().toUpperCase());
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://192.168.0.105:8080/getAllTrains", object, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getAllTrains", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                Log.i("Great",response.toString());
                                 JSONArray array = response.getJSONArray("trains");
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject train = array.getJSONObject(i);
@@ -88,6 +90,7 @@ public class GetAllTrainsActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES*2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     RequestQueue queue = Volley.newRequestQueue(GetAllTrainsActivity.this);
                     queue.add(request);
