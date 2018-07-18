@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,25 +31,49 @@ import java.io.UnsupportedEncodingException;
 
 public class GetFareActivity extends AppCompatActivity {
 
-    EditText etGetFrom, etGetTo, etGetTrainNo;
+    AutoCompleteTextView etGetFrom, etGetTo;
+    EditText etGetTrainNo;
     Button button;
+    String from,to;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_fare);
-        etGetFrom = (EditText) findViewById(R.id.et_from_1);
-        etGetTo = (EditText) findViewById(R.id.et_to_1);
+        etGetFrom = (AutoCompleteTextView) findViewById(R.id.et_from_1);
+        etGetTo = (AutoCompleteTextView) findViewById(R.id.et_to_1);
         etGetTrainNo = (EditText) findViewById(R.id.et_train_no_1);
         button = (Button) findViewById(R.id.btn_get_fare);
+
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStations.stations);
+        etGetFrom.setAdapter(adapter);
+        etGetTo.setAdapter(adapter);
+        etGetFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+                from = items[items.length-1];
+            }
+        });
+        etGetTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+//                Log.i("CBjk", String.valueOf(items.length));
+                to = items[items.length-1];
+            }
+        });
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 JSONObject object = new JSONObject();
                 try {
-                    object.put("from", etGetFrom.getText().toString().toUpperCase());
-                    object.put("to",etGetTo.getText().toString().toUpperCase());
+                    object.put("from", from);
+                    object.put("to",to);
                     object.put("train_no",Integer.parseInt(etGetTrainNo.getText().toString()));
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getFare", object, new Response.Listener<JSONObject>() {
                         @Override

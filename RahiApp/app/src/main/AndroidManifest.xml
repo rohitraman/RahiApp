@@ -13,15 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -29,6 +20,39 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SplashScreenActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".PinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetAvailabilityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetPNRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetRouteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetAllTrainsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetTrainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetFareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetTrainsOnActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetStatusActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".splash_rahi"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,17 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PinActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".GetAvailabilityActivity" />
-        <activity android:name=".GetPNRActivity" />
-        <activity android:name=".GetRouteActivity" />
-        <activity android:name=".GetAllTrainsActivity" />
-        <activity android:name=".GetTrainActivity" />
-        <activity android:name=".GetFareActivity" />
-        <activity android:name=".GetTrainsOnActivity" />
-        <activity android:name=".GetStatusActivity"></activity>
+        <activity android:name=".RouteViewActivity"></activity>
+        <activity android:name=".from_to"/>
     </application>
 
 </manifest>

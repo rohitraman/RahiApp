@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,9 +35,10 @@ import java.util.Calendar;
 
 public class GetAvailabilityActivity extends AppCompatActivity {
 
-    EditText train_no, from, to, clas, quota, date1;
+    EditText train_no, clas, quota, date1;
+    AutoCompleteTextView etFrom, etTo;
     Button button;
-    String day;
+    String day,from,to;
     String month;
     String year;
     String date,date3;
@@ -46,12 +49,32 @@ public class GetAvailabilityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_availability);
         train_no = (EditText) findViewById(R.id.editText);
-        from = (EditText) findViewById(R.id.editText2);
-        to = (EditText) findViewById(R.id.editText3);
+        etFrom = (AutoCompleteTextView) findViewById(R.id.editText2);
+        etTo = (AutoCompleteTextView) findViewById(R.id.editText3);
         clas = (EditText) findViewById(R.id.editText4);
         quota = (EditText) findViewById(R.id.editText5);
         date1 = (EditText)findViewById(R.id.editText8);
         button = (Button) findViewById(R.id.button);
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStations.stations);
+        etFrom.setAdapter(adapter);
+        etTo.setAdapter(adapter);
+        etFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+                from = items[items.length-1];
+            }
+        });
+        etTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+//                Log.i("CBjk", String.valueOf(items.length));
+                to = items[items.length-1];
+            }
+        });
 
         date1.setShowSoftInputOnFocus(false);
 
@@ -83,8 +106,8 @@ public class GetAvailabilityActivity extends AppCompatActivity {
                 year = dates[2];
                 JSONObject object = new JSONObject();
                 try {
-                    object.put("from", from.getText().toString().toUpperCase());
-                    object.put("to", to.getText().toString().toUpperCase());
+                    object.put("from", from);
+                    object.put("to", to);
                     object.put("cls", clas.getText().toString().toUpperCase());
                     object.put("qt", quota.getText().toString().toUpperCase());
                     object.put("dd", Integer.parseInt(day));

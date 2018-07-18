@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,20 +31,44 @@ import java.util.Calendar;
 //        {'coach_types': {'CC': '0', '2S': '0', 'GN': '1', 'SL': '1', '2A': '1', '3A': '1', '1A': '0'}, 'region': 'NE', 'train_type': 'Super Fast', 'train_base': {'source_stn_name': 'Thiruvananthapuram Central', 'train_id': '2134', 'source_depart': '06.15', 'from_stn_code': 'SRR', 'from_stn_name': 'Shoranur Jn', 'type': 'SUPERFAST', 'running_days': '0110001', 'to_time': '23.05', 'to_stn_name': 'Chennai Central', 'dstn_stn_code': 'GKP', 'travel_time': '09.55', 'dstn_stn_name': 'Gorakhpur', 'distance_from_to': '595', 'train_name': 'RAPTISAGAR EXP', 'train_no': '12512', 'source_stn_code': 'TVC', 'from_time': '13.10', 'average_speed': '60', 'to_stn_code': 'MAS', 'dstn_reach': '15.20'}, 'coach_arrangement': [{'1': {'coach_id': '', 'tag': '', 'type': 'En'}}, {'2': {'coach_id': '', 'tag': '', 'type': 'GS'}}, {'3': {'coach_id': '', 'tag': '', 'type': 'UR'}}, {'4': {'coach_id': '', 'tag': '', 'type': 'UR'}}, {'5': {'coach_id': 'S1', 'tag': 'S', 'type': 'SL'}}, {'6': {'coach_id': 'S2', 'tag': 'S', 'type': 'SL'}}, {'7': {'coach_id': 'S3', 'tag': 'S', 'type': 'SL'}}, {'8': {'coach_id': 'S4', 'tag': 'S', 'type': 'SL'}}, {'9': {'coach_id': 'S5', 'tag': 'S', 'type': 'SL'}}, {'10': {'coach_id': 'S6', 'tag': 'S', 'type': 'SL'}}, {'11': {'coach_id': 'S7', 'tag': 'S', 'type': 'SL'}}, {'12': {'coach_id': 'S8', 'tag': 'S', 'type': 'SL'}}, {'13': {'coach_id': 'S9', 'tag': 'S', 'type': 'SL'}}, {'14': {'coach_id': 'S10', 'tag': 'S', 'type': 'SL'}}, {'15': {'coach_id': 'S11', 'tag': 'S', 'type': 'SL'}}, {'16': {'coach_id': '', 'tag': '', 'type': 'PC'}}, {'17': {'coach_id': 'B1', 'tag': 'B', 'type': '3A'}}, {'18': {'coach_id': 'B2', 'tag': 'B', 'type': '3A'}}, {'19': {'coach_id': 'B3', 'tag': 'B', 'type': '3A'}}, {'20': {'coach_id': 'B4', 'tag': 'B', 'type': '3A'}}, {'21': {'coach_id': 'A1', 'tag': 'A', 'type': '2A'}}, {'22': {'coach_id': '', 'tag': '', 'type': 'UR'}}, {'23': {'coach_id': '', 'tag': '', 'type': 'UR'}}, {'24': {'coach_id': '', 'tag': '', 'type': 'GS'}}], 'rake_share': ['12511', '12512', '12589', '12590', '12591', '12592']}
 
 public class GetTrainsOnActivity extends AppCompatActivity {
-    EditText etFrom, etTo, etDate;
+    AutoCompleteTextView etFrom, etTo;
+    EditText etDate;
     Button button;
     String date;
+    String from,to;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_trains_on);
-        etFrom = (EditText) findViewById(R.id.et_from_2);
-        etTo = (EditText) findViewById(R.id.et_to_2);
+        etFrom = (AutoCompleteTextView) findViewById(R.id.et_from_2);
+        etTo = (AutoCompleteTextView) findViewById(R.id.et_to_2);
         etDate = (EditText) findViewById(R.id.et_date);
 
         button = (Button) findViewById(R.id.button2);
         etDate.setShowSoftInputOnFocus(false);
+
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStations.stations);
+        etFrom.setAdapter(adapter);
+        etTo.setAdapter(adapter);
+        etFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+                from = items[items.length-1];
+            }
+        });
+        etTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+//                Log.i("CBjk", String.valueOf(items.length));
+                to = items[items.length-1];
+            }
+        });
+
         Calendar calendar = Calendar.getInstance();
         final int dd = calendar.get(Calendar.DAY_OF_MONTH);
         final int mm = calendar.get(Calendar.MONTH);
@@ -70,8 +96,8 @@ public class GetTrainsOnActivity extends AppCompatActivity {
                 String yy = dates[2];
                 JSONObject object = new JSONObject();
                 try {
-                    object.put("from", etFrom.getText().toString().toUpperCase());
-                    object.put("to", etTo.getText().toString().toUpperCase());
+                    object.put("from", from);
+                    object.put("to", to);
                     object.put("dd", Integer.parseInt(dd));
                     object.put("mm", Integer.parseInt(mm));
                     object.put("yyyy", Integer.parseInt(yy));

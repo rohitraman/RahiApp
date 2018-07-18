@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.roshan.rahiapp.GetTrainsOnActivity">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_from_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:inputType="textPersonName"
         android:hint="From" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_to_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

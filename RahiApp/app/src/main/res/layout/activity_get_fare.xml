@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.roshan.rahiapp.GetFareActivity">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_from_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="37dp" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_to_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

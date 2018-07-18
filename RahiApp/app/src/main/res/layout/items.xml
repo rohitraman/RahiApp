@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="20dp"
+    android:weightSum="100"
+    android:elevation="20dp"
+    android:background="@drawable/round"
+    tools:context=".MainActivity">
+
+   <TextView
+       android:layout_width="match_parent"
+       android:id="@+id/textViewTile1"
+       android:layout_height="30dp"
+       android:paddingLeft="10dp"
+       android:paddingTop="5dp"
+       android:text="KOLKATA  RJDHNI (12302)"
+       android:textStyle="bold"
+       android:textSize="16dp"
+       android:textColor="#000 " />
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="20dp"
+       android:orientation="horizontal"
+       android:weightSum="100">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:paddingLeft="10dp"
+           android:paddingRight="5dp"
+           android:text="Mon"
+           android:textSize="12dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+          android:paddingRight="5dp"
+           android:text="Tue"
+           android:textSize="12dp" />
+
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:paddingRight="5dp"
+           android:text="Wed"
+           android:textSize="12dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:paddingRight="5dp"
+           android:text="Thu"
+           android:textSize="12dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:text="Fri"
+           android:paddingRight="5dp"
+           android:textSize="12dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:text="Sat"
+           android:paddingRight="5dp"
+           android:textSize="12dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:text="Sun"
+           android:paddingRight="5dp"
+           android:textSize="12dp" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:text="Pantry -"
+           android:layout_marginLeft="70dp"
+           android:gravity="end"
+           android:textColor="#000" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:text="Yes"
+           android:gravity="end"
+           android:textColor="#000" />
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="16:55"
+            android:textSize="13dp"
+            android:textColor="#000 "
+            android:textStyle="bold"
+            android:layout_weight="30"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="16 hr 55 min"
+            android:textAlignment="center"
+            android:textColor="#000 "
+            android:textStyle="bold"
+            android:textSize="13dp"
+            android:layout_weight="30"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="09:50"
+            android:gravity="end"
+            android:textColor="#000 "
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:layout_weight="30"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:weightSum="100">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="New Delhi"
+            android:id="@+id/textViewDescription1"
+            android:textColor="#000 "
+            android:textStyle="bold"
+            android:textSize="13dp"
+            android:layout_weight="30"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:background="@drawable/ic_trending_flat_black_24dp"
+            android:textStyle="bold"
+            android:layout_weight="30"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="Howrah Jn"
+            android:textColor="#000"
+            android:gravity="end"
+            android:textStyle="bold"
+            android:layout_weight="30"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Distance -"
+            android:textSize="13dp"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="1447Km"
+            android:textSize="13dp"
+            android:paddingRight="10dp"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Avg Speed -"
+            android:textSize="13dp"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="86Km/hr"
+            android:textSize="13dp"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Book"
+            android:textSize="13dp"
+            android:layout_weight="20"
+            android:layout_marginRight="5dp"
+            android:background="#ffa500 "/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="13dp"
+            android:text="fare"
+            android:background="#ffa500 "
+            android:layout_weight="20"
+            android:layout_marginRight="5dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="LIVE"
+            android:textSize="13dp"
+            android:background="#ffa500 "
+            android:layout_weight="20"
+            android:layout_marginRight="5dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffa500 "
+            android:text="xyz"
+            android:layout_weight="20"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+
+

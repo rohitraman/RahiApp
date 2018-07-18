@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,22 +31,44 @@ import java.io.UnsupportedEncodingException;
 //{"status":[{"arrdelay":0,"cancelled":false,"date":"18-Jun-2018","depdelay":0,"stations":"SRR","train":"12601"},{"arrdelay":38,"cancelled":false,"date":"17-Jun-2018","depdelay":38,"stations":"SRR","train":"12601"},{"arrdelay":78,"cancelled":false,"date":"16-Jun-2018","depdelay":75,"stations":"SRR","train":"12601"}]}
 
 public class GetStatusActivity extends AppCompatActivity {
-    EditText etStation,etTrainNo;
+    AutoCompleteTextView etStation;
+    EditText etTrainNo;
     Button button;
+    String station;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_status);
-        etStation = (EditText) findViewById(R.id.et_station);
+        etStation = (AutoCompleteTextView) findViewById(R.id.et_station);
         etTrainNo = (EditText) findViewById(R.id.et_train_no_3);
         button = (Button) findViewById(R.id.btn_getDetails);
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStations.stations);
+        etStation.setAdapter(adapter);
+//        etTo.setAdapter(adapter);
+        etStation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+                station = items[items.length-1];
+            }
+        });
+//        etTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String item = String.valueOf(adapterView.getItemAtPosition(i));
+//                String[] items = item.split(" ");
+////                Log.i("CBjk", String.valueOf(items.length));
+//                to = items[items.length-1];
+//            }
+//        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final JSONObject object = new JSONObject();
                 try {
-                    object.put("station",etStation.getText().toString().toUpperCase());
+                    object.put("station",station);
                     object.put("train_no",Integer.parseInt(etTrainNo.getText().toString()));
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getStatus", object, new Response.Listener<JSONObject>() {
                         @Override
