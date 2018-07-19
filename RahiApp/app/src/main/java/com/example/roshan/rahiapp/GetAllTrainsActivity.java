@@ -42,7 +42,7 @@ public class GetAllTrainsActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lv_trains);
 
 
-        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStations.stations);
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStationsAndTrains.stations);
         etFrom.setAdapter(adapter);
         etTo.setAdapter(adapter);
         etFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {

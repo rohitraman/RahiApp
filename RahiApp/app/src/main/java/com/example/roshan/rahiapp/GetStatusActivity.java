@@ -32,18 +32,20 @@ import java.io.UnsupportedEncodingException;
 
 public class GetStatusActivity extends AppCompatActivity {
     AutoCompleteTextView etStation;
-    EditText etTrainNo;
+    AutoCompleteTextView etTrainNo;
     Button button;
-    String station;
+    String station,train;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_status);
         etStation = (AutoCompleteTextView) findViewById(R.id.et_station);
-        etTrainNo = (EditText) findViewById(R.id.et_train_no_3);
+        etTrainNo = (AutoCompleteTextView) findViewById(R.id.et_train_no_3);
         button = (Button) findViewById(R.id.btn_getDetails);
-        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStations.stations);
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStationsAndTrains.stations);
         etStation.setAdapter(adapter);
+        CustomAutoTextViewAdapter adapter1 = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStationsAndTrains.trains);
+        etTrainNo.setAdapter(adapter1);
 //        etTo.setAdapter(adapter);
         etStation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,6 +53,15 @@ public class GetStatusActivity extends AppCompatActivity {
                 String item = String.valueOf(adapterView.getItemAtPosition(i));
                 String[] items = item.split(" ");
                 station = items[items.length-1];
+            }
+        });
+
+        etTrainNo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+                train = items[0];
             }
         });
 //        etTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,7 +80,7 @@ public class GetStatusActivity extends AppCompatActivity {
                 final JSONObject object = new JSONObject();
                 try {
                     object.put("station",station);
-                    object.put("train_no",Integer.parseInt(etTrainNo.getText().toString()));
+                    object.put("train_no",Integer.parseInt(train));
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getStatus", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

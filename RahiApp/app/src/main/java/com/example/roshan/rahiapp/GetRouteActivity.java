@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -30,21 +32,33 @@ import java.io.UnsupportedEncodingException;
 
 public class GetRouteActivity extends AppCompatActivity {
 
-    EditText etTrainNo;
+    AutoCompleteTextView etTrainNo;
+    String train;
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_route);
-        etTrainNo = (EditText) findViewById(R.id.et_trainNo);
+        etTrainNo = (AutoCompleteTextView) findViewById(R.id.et_trainNo);
         button = (Button) findViewById(R.id.btn_route);
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(GetRouteActivity.this,android.R.layout.simple_list_item_1,GetStationsAndTrains.trains);
+        etTrainNo.setAdapter(adapter);
+        etTrainNo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = String.valueOf(adapterView.getItemAtPosition(i));
+                String[] items = item.split(" ");
+                train = items[0];
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 JSONObject object = new JSONObject();
                 try {
                     Log.i("Blll","Bliiii");
-                    object.put("train_no",Integer.parseInt(etTrainNo.getText().toString()));
+                    object.put("train_no",Integer.parseInt(train));
                     Log.i("Yaay",object.toString());
                     final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getRoute", object, new Response.Listener<JSONObject>() {
                         @Override

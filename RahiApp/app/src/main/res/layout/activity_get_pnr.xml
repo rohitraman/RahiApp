@@ -14,7 +14,7 @@
         android:layout_marginTop="29dp"
         android:ems="10"
         android:hint="PNR"
-        android:inputType="textPersonName" />
+        android:inputType="number" />
 
     <Button
         android:id="@+id/btn_pnr"
@@ -24,4 +24,74 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="82dp"
         android:text="Get Details" />
+
+    <TextView
+        android:id="@+id/tvPNR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_pnr"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="23dp"
+          />
+
+    <TextView
+        android:id="@+id/tvFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvPNR"
+        android:layout_alignBottom="@+id/tvPNR"
+        android:layout_centerHorizontal="true"
+          />
+
+    <TextView
+        android:id="@+id/tvTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvFrom"
+        android:layout_alignBottom="@+id/tvFrom"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="29dp"
+          />
+
+    <TextView
+        android:id="@+id/tvTrainNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvPNR"
+        android:layout_below="@+id/tvPNR"
+        android:layout_marginTop="49dp"
+          />
+
+    <TextView
+        android:id="@+id/tvTrainName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvFrom"
+        android:layout_alignTop="@+id/tvTrainNo"
+          />
+
+    <TextView
+        android:id="@+id/tv_total_passengers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvTo"
+        android:layout_alignTop="@+id/tvTrainName"
+          />
+
+    <TextView
+        android:id="@+id/tv_doj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvTrainNo"
+        android:layout_below="@+id/tvTrainNo"
+        android:layout_marginTop="55dp"
+          />
+
+    <ListView
+        android:id="@+id/lv_passengers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_doj" />
 </RelativeLayout>

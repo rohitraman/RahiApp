@@ -29,7 +29,7 @@
         android:hint="To"
         android:inputType="textPersonName" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_train_no_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,4 +48,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
         android:text="Get Fare" />
+
 </RelativeLayout>

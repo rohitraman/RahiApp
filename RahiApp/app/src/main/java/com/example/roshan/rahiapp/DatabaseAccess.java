@@ -117,6 +117,25 @@ public class DatabaseAccess {
 
         return stations;
     }
+
+    public List<String> getTrains1()
+    {
+        String sql = "select trainNO,trainName from train_table";
+        List<String> trains = new ArrayList<>();
+        Cursor cursor = database.rawQuery(sql,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast())
+        {
+            String number = cursor.getString(0);
+            String name = cursor.getString(1);
+            trains.add(number+" - "+name);
+            Log.i("Lol","lol");
+            cursor.moveToNext();
+        }
+        Log.i("Stations",trains.toString());
+
+        return trains;
+    }
 }
 
 class ListItems

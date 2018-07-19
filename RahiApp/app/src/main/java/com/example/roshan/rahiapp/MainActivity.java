@@ -93,8 +93,12 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseAccess access = DatabaseAccess.getInstance(this);
         access.open();
-        GetStations.stations = access.getStations();
-
+        if (GetStationsAndTrains.stations.size() == 0) {
+            GetStationsAndTrains.stations = access.getStations();
+        }
+        if (GetStationsAndTrains.trains.size() == 0) {
+            GetStationsAndTrains.trains = access.getTrains1();
+        }
         access.close();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
