@@ -15,16 +15,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "133990961021-626oe2g5bor0mn0sg3l348pb8aj7lr3a.apps.googleusercontent.com",
+          "client_id": "133990961021-i0jp0cbev3kksbl9srv6qmgsilu1gp5q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.roshan.rahiapp",
-            "certificate_hash": "53f783cf9c739e24d4410d107e5d6b994157cb6a"
+            "certificate_hash": "ab904ddbc62558474cca2156ee1d194b69c469af"
           }
-        },
-        {
-          "client_id": "133990961021-oc30jflsaaiv849pqirdfhhnbni99p4e.apps.googleusercontent.com",
-          "client_type": 3
         },
         {
           "client_id": "133990961021-oc30jflsaaiv849pqirdfhhnbni99p4e.apps.googleusercontent.com",

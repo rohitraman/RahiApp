@@ -54,14 +54,19 @@
         <activity
             android:name=".splash_rahi"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".RouteViewActivity"></activity>
+        <activity android:name=".from_to"/>
+        <activity
+            android:name=".TimeLineActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RouteViewActivity"></activity>
-        <activity android:name=".from_to"/>
     </application>
 
 </manifest>

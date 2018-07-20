@@ -11,7 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -49,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
         backToLoginBtn = (Button) findViewById(R.id.register_to_login_btn);
         session = new Session(this);
         mAuth = FirebaseAuth.getInstance();
+
+
 
         backToLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                                 session.setLoggedIn(true);
                                                                 DBUser.user = mAuth.getCurrentUser();
                                                                 Log.i("User",DBUser.user.getEmail());
-                                                                Intent intent = new Intent(RegisterActivity.this, PinActivity.class);
+                                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                                                 finish();
                                                             }
