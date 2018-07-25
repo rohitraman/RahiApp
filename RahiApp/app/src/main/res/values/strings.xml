@@ -5,4 +5,6 @@
     <string name="clas">Class</string>
     <string name="quota">Quota</string>
     <string name="button">Button</string>
+    <string name="forgot_password_click_here"><u>Forgot Password? Click here</u></string>
+    <string name="forgot_pin"><u>Forgot Pin?Click here</u></string>
 </resources>

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -49,8 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton mGoogleButton;
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseAuth.AuthStateListener listener;
-
+    TextView tv_forgotPass;
 
     private void login() {
         DBUser.user = mAuth.getCurrentUser();
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         logPass = (EditText) findViewById(R.id.login_password);
         signInAccount = (Button) findViewById(R.id.login_button);
         backToRegBtn = (Button) findViewById(R.id.login_to_register_btn);
-
+        tv_forgotPass = (TextView) findViewById(R.id.tv_forgotpass);
         mGoogleButton = (SignInButton) findViewById(R.id.googleBtn);
         mGoogleButton.setSize(SignInButton.SIZE_WIDE);
 
@@ -79,7 +79,12 @@ public class LoginActivity extends AppCompatActivity {
         if (session.loggedIn()) {
             login();
         }
-
+        tv_forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
+            }
+        });
 
         backToRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +151,15 @@ public class LoginActivity extends AppCompatActivity {
                 mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, gso);
 
                 signIn();
+            }
+        });
+
+        tv_forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
+
             }
         });
 

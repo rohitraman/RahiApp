@@ -20,7 +20,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SplashScreenActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PinActivity"
             android:screenOrientation="portrait" />
@@ -47,26 +47,25 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".GetStatusActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".splash_rahi"
             android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".RouteViewActivity"></activity>
-        <activity android:name=".from_to"/>
-        <activity
-            android:name=".TimeLineActivity"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".RouteViewActivity" />
+        <activity android:name=".from_to" />
+        <activity
+            android:name=".TimeLineActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ChangePasswordActivity"></activity>
     </application>
 
 </manifest>
