@@ -1,7 +1,7 @@
 package com.example.roshan.rahiapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +16,12 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.mapswithme.maps.api.MapsWithMeApi;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,15 +37,17 @@ import java.util.List;
 public class GetPNRActivity extends AppCompatActivity {
     EditText etPNR;
     Button button;
-    TextView tvPNR,tvFrom,tvTo,tvTrainNo,tvTrainName,tv_total_passengers,tv_doj;
+    TextView tvPNR, tvFrom, tvTo, tvTrainNo, tvTrainName, tv_total_passengers, tv_doj;
     List<Integer> nums = new ArrayList<>();
     List<String> bStatuses = new ArrayList<>();
     List<String> cStatuses = new ArrayList<>();
     ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_pnr);
+        MapsWithMeApi.showPointOnMap(this, 24, 73, "Hellp", 12);
         etPNR = (EditText) findViewById(R.id.editText6);
         button = (Button) findViewById(R.id.btn_pnr);
         tvPNR = (TextView) findViewById(R.id.tvPNR);
@@ -55,18 +57,18 @@ public class GetPNRActivity extends AppCompatActivity {
         tvTrainNo = (TextView) findViewById(R.id.tvTrainNo);
         tv_total_passengers = (TextView) findViewById(R.id.tv_total_passengers);
         tv_doj = (TextView) findViewById(R.id.tv_doj);
-        listView = (ListView)findViewById(R.id.lv_passengers);
+        listView = (ListView) findViewById(R.id.lv_passengers);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String pnr = etPNR.getText().toString();
                 JSONObject object = new JSONObject();
                 try {
-                    object.put("pnr",pnr);
+                    object.put("pnr", pnr);
                     final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getPNR", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                                Log.i("Rsponse",response.toString());
+                            Log.i("Rsponse", response.toString());
                             try {
                                 JSONObject boardingPoint = response.getJSONObject("boarding_point");
                                 String doj = response.getString("doj");
@@ -78,8 +80,7 @@ public class GetPNRActivity extends AppCompatActivity {
                                 String trainName = train.getString("name");
                                 String trainNumber = train.getString("number");
                                 JSONArray array = response.getJSONArray("passengers");
-                                for(int i=0;i<array.length();i++)
-                                {
+                                for (int i = 0; i < array.length(); i++) {
                                     JSONObject object1 = array.getJSONObject(i);
                                     String booking_status = object1.getString("booking_status");
                                     String current_status = object1.getString("current_status");
@@ -108,30 +109,27 @@ public class GetPNRActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            if (error!=null) {
-                              try
-                              {
-                                Log.i("Erroe", error.toString());
-                            }catch (Exception e)
-                              {
-                                  Log.i("Ball",e.getMessage());
-                              }
+                            if (error != null) {
+                                try {
+                                    Log.i("Erroe", error.toString());
+                                } catch (Exception e) {
+                                    Log.i("Ball", e.getMessage());
+                                }
                             }
                             NetworkResponse response = error.networkResponse;
-                            if(error instanceof ServerError && response!=null)
-                            {
+                            if (error instanceof ServerError && response != null) {
                                 String response1 = null;
                                 try {
-                                    response1 = new String(response.data, HttpHeaderParser.parseCharset(response.headers,"utf-8"));
+                                    response1 = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
-                                Log.i("Erroorr",response1);
+                                Log.i("Erroorr", response1);
                             }
                         }
                     });
 
-                    request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES*2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES * 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     RequestQueue queue = Volley.newRequestQueue(GetPNRActivity.this);
                     queue.add(request);
 
@@ -142,8 +140,8 @@ public class GetPNRActivity extends AppCompatActivity {
             }
         });
     }
-    class CustomAdapter extends BaseAdapter
-    {
+
+    class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -162,12 +160,12 @@ public class GetPNRActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.pnr_layout,viewGroup,false);
+            view = getLayoutInflater().inflate(R.layout.pnr_layout, viewGroup, false);
             TextView tvNo = (TextView) view.findViewById(R.id.tv_no);
             TextView tvBS = (TextView) view.findViewById(R.id.tvBookStat);
             TextView tvCS = (TextView) view.findViewById(R.id.tvCurrStat);
 
-            tvNo.setText(nums.get(i)+".");
+            tvNo.setText(nums.get(i) + ".");
             tvBS.setText(bStatuses.get(i));
             tvCS.setText(cStatuses.get(i));
 

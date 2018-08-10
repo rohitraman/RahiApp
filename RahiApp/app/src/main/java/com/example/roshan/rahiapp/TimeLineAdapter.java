@@ -40,9 +40,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineViewHolder> {
         mContext = parent.getContext();
         mLayoutInflater = LayoutInflater.from(mContext);
         View view;
-
-
-            view = mLayoutInflater.inflate( R.layout.item_timeline, parent, false);
+        view = mLayoutInflater.inflate( R.layout.item_timeline, parent, false);
 
 
         return new TimeLineViewHolder(view, viewType);
@@ -63,7 +61,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineViewHolder> {
 
         if(!timeLineModel.getDate().isEmpty()) {
             holder.mDate.setVisibility(View.VISIBLE);
-            holder.mDate.setText(DateTimeUtils.parseDateTime(timeLineModel.getDate(), "yyyy-MM-dd HH:mm", "hh:mm a, dd-MMM-yyyy"));
+            holder.mDate.setText(DateTimeUtils.parseDateTime(timeLineModel.getDate(), "dd MMM yyyy HH:mm", "hh:mm a, dd-MMM-yyyy"));
         }
         else
             holder.mDate.setVisibility(View.GONE);

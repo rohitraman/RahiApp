@@ -1,0 +1,144 @@
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp"
+    sothree:umanoParallaxOffset="100dp"
+    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoOverlay="true"
+    sothree:umanoScrollableView="@+id/list">
+
+
+
+    <!-- MAIN CONTENT -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </org.osmdroid.views.MapView>
+
+
+
+    <!-- SLIDING LAYOUT -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="#ededed"
+        android:id="@+id/dragView">
+
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/mms"
+                android:layout_below="@+id/linearLayout"
+                android:background="@color/colorAccent3" />
+
+            <EditText
+                android:id="@+id/from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:ems="10"
+                android:hint="From"
+                android:inputType="textPersonName"
+                android:paddingBottom="12dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="14dp" />
+            <EditText
+                android:id="@+id/to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="To"
+                android:layout_marginTop="10dp"
+                android:inputType="textPersonName"
+                android:paddingBottom="12dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="14dp" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/linearLayout"
+                android:orientation="horizontal"
+                >
+
+                <EditText
+                    android:id="@+id/departure"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:ems="8"
+                    android:hint="Departure"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="14dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/colorAccent3"
+                    android:text="Now"
+                    android:textColor="@android:color/white" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:text="Extra"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/white"
+                    android:background="@color/colorAccent3"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:text="Plan"
+                android:onClick="ml"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/mm"
+            android:layout_below="@+id/linearLayout"
+            android:background="@color/colorAccent3" />
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/mm"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="165dp" />
+
+
+    </RelativeLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

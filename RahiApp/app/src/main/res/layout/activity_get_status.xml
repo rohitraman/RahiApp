@@ -6,36 +6,36 @@
     tools:context="com.example.roshan.rahiapp.GetStatusActivity">
 
     <AutoCompleteTextView
-        android:id="@+id/et_station"
+        android:id="@+id/et_train_no1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="15dp"
         android:ems="10"
-        android:hint="Station"
+        android:hint="Train No"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="24dp" />
 
-    <AutoCompleteTextView
-        android:id="@+id/et_train_no_3"
+    <EditText
+        android:id="@+id/et_date1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_station"
+        android:layout_below="@+id/et_train_no1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:hint="Train No"
+        android:hint="Date"
         android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btn_getDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_train_no_3"
+        android:layout_below="@+id/et_date1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="19dp"
         android:text="Get Status" />
 
 </RelativeLayout>

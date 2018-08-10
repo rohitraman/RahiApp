@@ -7,4 +7,7 @@
     <string name="button">Button</string>
     <string name="forgot_password_click_here"><u>Forgot Password? Click here</u></string>
     <string name="forgot_pin"><u>Forgot Pin?Click here</u></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

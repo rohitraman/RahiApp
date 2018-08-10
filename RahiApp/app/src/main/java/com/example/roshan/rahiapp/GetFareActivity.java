@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -28,13 +27,12 @@ import java.io.UnsupportedEncodingException;
 //{"Adult":{"2A":"1,330","3A":"940","GN":"185","SL":"355"},"Adult Tatkal":{"2A":"1,750","3A":"1,255","GN":"-","SL":"455"},"Child":{"2A":"665","3A":"475","GN":"100","SL":"185"},"Child Tatkal":{"2A":"1,095","3A":"770","GN":"-","SL":"295"},"Sen. Female":{"2A":"715","3A":"515","GN":"185","SL":"205"},"Sen. Male":{"2A":"840","3A":"600","GN":"185","SL":"235"}}
 
 
-
 public class GetFareActivity extends AppCompatActivity {
 
     AutoCompleteTextView etGetFrom, etGetTo;
     AutoCompleteTextView etGetTrainNo;
     Button button;
-    String from,to,train;
+    String from, to, train;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +43,17 @@ public class GetFareActivity extends AppCompatActivity {
         etGetTrainNo = (AutoCompleteTextView) findViewById(R.id.et_train_no_1);
         button = (Button) findViewById(R.id.btn_get_fare);
 
-        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStationsAndTrains.stations);
+        CustomAutoTextViewAdapter adapter = new CustomAutoTextViewAdapter(this, android.R.layout.simple_list_item_1, GetStationsAndTrains.stations);
         etGetFrom.setAdapter(adapter);
         etGetTo.setAdapter(adapter);
-        CustomAutoTextViewAdapter adapter1 = new CustomAutoTextViewAdapter(this,android.R.layout.simple_list_item_1,GetStationsAndTrains.trains);
+        CustomAutoTextViewAdapter adapter1 = new CustomAutoTextViewAdapter(this, android.R.layout.simple_list_item_1, GetStationsAndTrains.trains);
         etGetTrainNo.setAdapter(adapter1);
         etGetFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = String.valueOf(adapterView.getItemAtPosition(i));
                 String[] items = item.split(" ");
-                from = items[items.length-1];
+                from = items[items.length - 1];
             }
         });
         etGetTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,7 +62,7 @@ public class GetFareActivity extends AppCompatActivity {
                 String item = String.valueOf(adapterView.getItemAtPosition(i));
                 String[] items = item.split(" ");
 //                Log.i("CBjk", String.valueOf(items.length));
-                to = items[items.length-1];
+                to = items[items.length - 1];
             }
         });
 
@@ -74,7 +72,7 @@ public class GetFareActivity extends AppCompatActivity {
                 String item = String.valueOf(adapterView.getItemAtPosition(i));
                 String[] items = item.split(" ");
 //                Log.i("CBjk", String.valueOf(items.length));
-                train  = items[0];
+                train = items[0];
             }
         });
 
@@ -85,13 +83,13 @@ public class GetFareActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject();
                 try {
                     object.put("from", from);
-                    object.put("to",to);
-                    object.put("train_no",Integer.parseInt(train));
+                    object.put("to", to);
+                    object.put("train_no", Integer.parseInt(train));
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://railwayapi.herokuapp.com/getFare", object, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                Log.i("Response",response.toString());
+                                Log.i("Response", response.toString());
                                 JSONObject adult = response.getJSONObject("Adult");
                                 JSONObject adultTatkal = response.getJSONObject("Adult Tatkal");
                                 JSONObject child = response.getJSONObject("Child");
@@ -105,13 +103,12 @@ public class GetFareActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.i("Error",error.toString());
+                            Log.i("Error", error.toString());
                             NetworkResponse response = error.networkResponse;
-                            if (error instanceof ServerError && response!=null)
-                            {
+                            if (error instanceof ServerError && response != null) {
                                 try {
-                                    String string = new String(response.data, HttpHeaderParser.parseCharset(response.headers,"utf-8"));
-                                    Log.i("Finally",string);
+                                    String string = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                    Log.i("Finally", string);
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
@@ -119,7 +116,7 @@ public class GetFareActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    request.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES*2,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES * 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     RequestQueue queue = Volley.newRequestQueue(GetFareActivity.this);
                     queue.add(request);
                 } catch (JSONException e) {

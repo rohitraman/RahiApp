@@ -32,7 +32,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".GetRouteActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".GetAllTrainsActivity"
             android:screenOrientation="portrait" />
@@ -50,14 +52,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".splash_rahi"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity android:name=".RouteViewActivity" />
         <activity android:name=".from_to" />
@@ -65,7 +70,10 @@
             android:name=".TimeLineActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".SlidingActivity" />
+        <activity android:name=".maps.MapActivity" />
+        <activity android:name=".TabActivity"></activity>
     </application>
 
 </manifest>

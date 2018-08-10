@@ -20,7 +20,7 @@ public class TimeLineActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private TimeLineAdapter mTimeLineAdapter;
-    private List<TimeLineModel> mDataList = new ArrayList<>();
+    public static List<TimeLineModel> mDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class TimeLineActivity extends AppCompatActivity {
 
 
     private void initView() {
-        setDataListItems();
+//        setDataListItems();
         mTimeLineAdapter = new TimeLineAdapter(mDataList);
         mRecyclerView.setAdapter(mTimeLineAdapter);
     }
